@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prodigal Sun Radio — Where the Mix Never Sleeps</title>
+<meta property="og:title" content="Prodigal Sun Radio">
+<meta property="og:description" content="Where the mix never sleeps. Live house, dance & more from Prodigal Sun Radio.">
+<meta property="og:image" content="https://static.wixstatic.com/media/4657a4_ec25b8508b3144d7b60f269f9af095df~mv2.png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #000;
+  --panel: #0a0a0a;
+  --border: #222;
+  --text: #fff;
+  --muted: #aaa;
+  --accent: #fff;
+  --live: #fff;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  line-height: 1.4;
+}
+.header {
+  text-align: center;
+  padding: 50px 20px 30px;
+  border-bottom: 2px solid #fff;
+  margin-bottom: 40px;
+}
+.logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.logo {
+  width: 160px;
+  height: 160px;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: 56px;
+  letter-spacing: -1px;
+  background: #000;
+  box-shadow: 0 0 0 8px #000, 0 0 0 10px #fff;
+}
+.title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(42px, 8vw, 72px);
+  font-weight: 900;
+  letter-spacing: 1px;
+  line-height: 0.9;
+  margin: 10px 0 8px;
+}
+.tagline {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(16px, 3vw, 22px);
+  letter-spacing: 3px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+.now-playing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 32px 24px;
+  margin: 0 auto 50px;
+  max-width: 520px;
+}
+#cover {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border: 2px solid #fff;
+  background: #111;
+}
+.np-info .artist {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.np-info .title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  line-height: 1.1;
+}
+.np-info .sub { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+.player {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+.player button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+.player button:hover { background: #fff; color: #000; }
+.player input[type=range] { accent-color: #fff; width: 120px; }
+.schedule-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+.schedule-header h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 28px;
+  letter-spacing: 1px;
+}
+.day-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.day-btn {
+  background: transparent;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 6px 12px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+.day-btn.active {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.schedule-table th, .schedule-table td {
+  border-bottom: 1px solid #222;
+  padding: 12px 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+.schedule-table th {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #aaa;
+  border-bottom: 2px solid #fff;
+}
+.schedule-table tr.live {
+  background: #111;
+  outline: 1px solid #fff;
+}
+.schedule-table .cover-cell { width: 70px; }
+.schedule-table .cover-cell img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border: 1px solid #333;
+}
+.live-badge {
+  display: inline-block;
+  background: #fff;
+  color: #000;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  letter-spacing: 1px;
+  margin-left: 8px;
+}
+.footer {
+  text-align: center;
+  margin-top: 50px;
+  padding: 30px 20px;
+  border-top: 2px solid #fff;
+  font-family: 'Orbitron', sans-serif;
+}
+.footer .listen {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.footer a { color: #fff; text-decoration: none; font-size: 18px; letter-spacing: 1px; }
+.footer a:hover { text-decoration: underline; }
+@media (max-width: 700px) {
+  .now-playing { max-width: 100%; }
+  #cover { margin: 0 auto; }
+  .schedule-table .hide-mobile { display: none; }
+  .title { font-size: 36px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-wrap">
+    <div class="logo"><span>PSR</span></div>
+  </div>
+  <div class="title">PRODIGAL SUN<br>RADIO</div>
+  <div class="tagline">WHERE THE MIX NEVER SLEEPS!!</div>
+</div>
+
+<div class="container">
+
+  <!-- Now Playing -->
+  <section class="now-playing">
+    <img id="cover" src="https://i.imgur.com/QPevqGi.png" alt="Now Playing Cover">
+    <div class="np-info">
+      <div class="artist" id="np-artist">PRODIGAL SUN RADIO</div>
+      <div class="title" id="np-title">Loading…</div>
+      <div class="sub">Live Studio Feed</div>
+      <div class="player">
+        <button id="play-btn" aria-label="Play/Pause">▶</button>
+        <input type="range" id="volume" min="0" max="100" value="70">
+        <span style="font-size:12px;color:#aaa;">VOL</span>
+      </div>
+      <audio id="audio" preload="none"></audio>
+    </div>
+  </section>
+
+  <!-- Schedule -->
+  <div class="schedule-header">
+    <h2>SCHEDULE</h2>
+    <div class="day-bar" id="dayBar"></div>
+  </div>
+  <div style="overflow-x:auto; max-width: 900px; margin: 0 auto;">
+    <table class="schedule-table" id="scheduleTable">
+      <thead>
+        <tr>
+          <th class="cover-cell">Art</th>
+          <th>Time</th>
+          <th>Show</th>
+          <th class="hide-mobile">Host</th>
+          <th class="hide-mobile">Genre</th>
+        </tr>
+      </thead>
+      <tbody id="scheduleBody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div class="listen">LISTEN LIVE</div>
+  <a href="https://prodigalsunradio.com" target="_blank">prodigalsunradio.com</a>
+</div>
+
+<script>
+const API = "https://api.radioking.io/widget/radio/the-channel-x/track/current";
+const SHEET = "https://opensheet.elk.sh/17fzRM4irUYRcemPMpwph_500P3HMWQ1ZzqYpr8DrdQs/Schedule";
+const STREAM = "https://listen.radioking.com/radio/443393/stream/497783";
+const DEFAULT_COVER = "https://i.imgur.com/QPevqGi.png";
+
+const audio = document.getElementById("audio");
+const playBtn = document.getElementById("play-btn");
+const volume = document.getElementById("volume");
+audio.src = STREAM;
+audio.volume = 0.7;
+
+playBtn.addEventListener("click", () => {
+  if (audio.paused) {
+    audio.play().then(() => playBtn.textContent = "❚❚").catch(() => {});
+  } else {
+    audio.pause();
+    playBtn.textContent = "▶";
+  }
+});
+volume.addEventListener("input", () => audio.volume = volume.value / 100);
+
+async function updateNowPlaying() {
+  try {
+    const r = await fetch(API, { cache: "no-store" });
+    const d = await r.json();
+    document.getElementById("np-artist").textContent = d.artist || "PRODIGAL SUN RADIO";
+    document.getElementById("np-title").textContent = d.title || "Live";
+    const cover = d.cover || DEFAULT_COVER;
+    const img = document.getElementById("cover");
+    if (img.src !== cover) img.src = cover;
+  } catch (e) {
+    document.getElementById("np-artist").textContent = "PRODIGAL SUN RADIO";
+    document.getElementById("np-title").textContent = "Live";
+  }
+}
+updateNowPlaying();
+setInterval(updateNowPlaying, 20000);
+
+// Schedule
+let scheduleData = [];
+let activeDay = null;
+
+function getToday() {
+  return new Date().toLocaleDateString("en-GB", { weekday: "long" });
+}
+function timeToMin(t) {
+  const [h, m] = String(t || "00:00").split(":").map(Number);
+  return (h || 0) * 60 + (m || 0);
+}
+function nowMin() {
+  const d = new Date();
+  return d.getHours() * 60 + d.getMinutes();
+}
+function isLive(s) {
+  if (s.Day !== getToday()) return false;
+  let start = timeToMin(s.Start);
+  let end = timeToMin(s.End);
+  let now = nowMin();
+  if (end <= start) end += 1440;
+  if (end > 1440 && now < start) now += 1440;
+  return now >= start && now < end;
+}
+
+async function loadSchedule() {
+  try {
+    const r = await fetch(SHEET);
+    scheduleData = await r.json();
+  } catch (e) { scheduleData = []; }
+  const today = getToday();
+  const days = [...new Set(scheduleData.map(s => s.Day))];
+  activeDay = days.includes(today) ? today : days[0];
+  renderDays();
+  renderSchedule();
+}
+function renderDays() {
+  const days = [...new Set(scheduleData.map(s => s.Day))];
+  document.getElementById("dayBar").innerHTML = days.map(d =>
+    `<button class="day-btn ${d === activeDay ? "active" : ""}" onclick="setDay('${d}')">${d.slice(0,3).toUpperCase()}</button>`
+  ).join("");
+}
+function setDay(day) {
+  activeDay = day;
+  renderDays();
+  renderSchedule();
+}
+function renderSchedule() {
+  const shows = scheduleData.filter(s => s.Day === activeDay);
+  const body = document.getElementById("scheduleBody");
+  body.innerHTML = shows.map(s => {
+    const live = isLive(s);
+    return `<tr class="${live ? "live" : ""}">
+      <td class="cover-cell"><img src="${s.Photo || DEFAULT_COVER}" alt=""></td>
+      <td style="font-family:Orbitron,sans-serif;font-size:13px;white-space:nowrap;">${s.Start} – ${s.End}</td>
+      <td>
+        <strong>${s.Show}</strong>
+        ${live ? '<span class="live-badge">LIVE</span>' : ""}
+        <div style="color:#888;font-size:12px;margin-top:2px;">${s.Host}</div>
+      </td>
+      <td class="hide-mobile">${s.Host}</td>
+      <td class="hide-mobile" style="color:#aaa;font-size:13px;">${s.Genre || ""}</td>
+    </tr>`;
+  }).join("");
+}
+setInterval(() => {
+  if (activeDay === getToday()) renderSchedule();
+}, 60000);
+loadSchedule();
+</script>
+</body>
+</html>
